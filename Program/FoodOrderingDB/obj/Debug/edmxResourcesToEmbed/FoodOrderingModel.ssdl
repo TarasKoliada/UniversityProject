@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrderingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Administrator">
+    <Key>
+      <PropertyRef Name="admin_id" />
+    </Key>
+    <Property Name="admin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="site_id" Type="int" Nullable="false" />
+    <Property Name="admin_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="admin_surname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="admin_middle_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="admin_login" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="admin_password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="admin_contact" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="admin_preferences" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_surname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_first_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_middle_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="customer_phone_number" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="customer_username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_password" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="customer_account_status" Type="bit" Nullable="false" />
+    <Property Name="customer_adress" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dish">
+    <Key>
+      <PropertyRef Name="dish_id" />
+    </Key>
+    <Property Name="dish_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dish_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="dish_price" Type="float" Nullable="false" />
+    <Property Name="menu_type_id" Type="int" Nullable="false" />
+    <Property Name="dish_ingredients" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="dish_status" Type="bit" Nullable="false" />
+    <Property Name="dish_weight" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="employee_id" />
+    </Key>
+    <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="site_id" Type="int" Nullable="false" />
+    <Property Name="employee_surname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="employee_first_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="employee_middle_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="email_adress" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="employee_contact" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="system_login" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="system_password" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="employee_preferences" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Menu_type">
+    <Key>
+      <PropertyRef Name="menu_type_id" />
+    </Key>
+    <Property Name="menu_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="menu_type_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="type_description" Type="varchar(max)" Nullable="false" />
+    <Property Name="site_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Order_details">
+    <Key>
+      <PropertyRef Name="order_details_id" />
+    </Key>
+    <Property Name="order_details_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_id" Type="int" Nullable="false" />
+    <Property Name="dish_id" Type="int" Nullable="false" />
+    <Property Name="number_od_servings" Type="int" Nullable="false" />
+    <Property Name="total_dish_price" Type="float" Nullable="false" />
+    <Property Name="note" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_id" Type="int" Nullable="false" />
+    <Property Name="order_date" Type="datetime" Nullable="false" />
+    <Property Name="total_price" Type="float" Nullable="false" />
+    <Property Name="order_status" Type="bit" Nullable="false" />
+    <Property Name="employee_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="payment_id" />
+    </Key>
+    <Property Name="payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="order_id" Type="int" Nullable="false" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="paid_by" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="payment_date" Type="datetime" Nullable="false" />
+    <Property Name="employee_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="rating_id" />
+    </Key>
+    <Property Name="rating_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dish_id" Type="int" Nullable="false" />
+    <Property Name="score" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="remarks" Type="varbinary(max)" />
+    <Property Name="recorded_date" Type="datetime" Nullable="false" />
+    <Property Name="customer_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Site_Info">
+    <Key>
+      <PropertyRef Name="site_id" />
+    </Key>
+    <Property Name="site_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="site_name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="site_description" Type="varchar(max)" />
+    <Property Name="site_contact_info" Type="varchar(max)" Nullable="false" />
+    <Property Name="company_adress" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="last_update" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Admin_To_Site">
+    <End Role="Site_Info" Type="Self.Site_Info" Multiplicity="1" />
+    <End Role="Administrator" Type="Self.Administrator" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site_Info">
+        <PropertyRef Name="site_id" />
+      </Principal>
+      <Dependent Role="Administrator">
+        <PropertyRef Name="site_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dish_To_Menu_type">
+    <End Role="Menu_type" Type="Self.Menu_type" Multiplicity="1" />
+    <End Role="Dish" Type="Self.Dish" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu_type">
+        <PropertyRef Name="menu_type_id" />
+      </Principal>
+      <Dependent Role="Dish">
+        <PropertyRef Name="menu_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_To_SiteInfo">
+    <End Role="Site_Info" Type="Self.Site_Info" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site_Info">
+        <PropertyRef Name="site_id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="site_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_details_To_Dish">
+    <End Role="Dish" Type="Self.Dish" Multiplicity="1" />
+    <End Role="Order_details" Type="Self.Order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dish">
+        <PropertyRef Name="dish_id" />
+      </Principal>
+      <Dependent Role="Order_details">
+        <PropertyRef Name="dish_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_details_To_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="Order_details" Type="Self.Order_details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Order_details">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_To_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_To_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="employee_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_To_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="employee_id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payment_To_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rating_To_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rating_To_Dish">
+    <End Role="Dish" Type="Self.Dish" Multiplicity="1" />
+    <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dish">
+        <PropertyRef Name="dish_id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="dish_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Type_to_Site">
+    <End Role="Site_Info" Type="Self.Site_Info" Multiplicity="1" />
+    <End Role="Menu_type" Type="Self.Menu_type" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Site_Info">
+        <PropertyRef Name="site_id" />
+      </Principal>
+      <Dependent Role="Menu_type">
+        <PropertyRef Name="site_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OrderingModelStoreContainer">
+    <EntitySet Name="Administrator" EntityType="Self.Administrator" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dish" EntityType="Self.Dish" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu_type" EntityType="Self.Menu_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order_details" EntityType="Self.Order_details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Site_Info" EntityType="Self.Site_Info" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Admin_To_Site" Association="Self.FK_Admin_To_Site">
+      <End Role="Site_Info" EntitySet="Site_Info" />
+      <End Role="Administrator" EntitySet="Administrator" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dish_To_Menu_type" Association="Self.FK_Dish_To_Menu_type">
+      <End Role="Menu_type" EntitySet="Menu_type" />
+      <End Role="Dish" EntitySet="Dish" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_To_SiteInfo" Association="Self.FK_Employee_To_SiteInfo">
+      <End Role="Site_Info" EntitySet="Site_Info" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_details_To_Dish" Association="Self.FK_Order_details_To_Dish">
+      <End Role="Dish" EntitySet="Dish" />
+      <End Role="Order_details" EntitySet="Order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_details_To_Orders" Association="Self.FK_Order_details_To_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_details" EntitySet="Order_details" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_To_Customer" Association="Self.FK_Orders_To_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_To_Employee" Association="Self.FK_Orders_To_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_To_Employee" Association="Self.FK_Payment_To_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payment_To_Orders" Association="Self.FK_Payment_To_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Payment" EntitySet="Payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rating_To_Customer" Association="Self.FK_Rating_To_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rating_To_Dish" Association="Self.FK_Rating_To_Dish">
+      <End Role="Dish" EntitySet="Dish" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Type_to_Site" Association="Self.FK_Type_to_Site">
+      <End Role="Site_Info" EntitySet="Site_Info" />
+      <End Role="Menu_type" EntitySet="Menu_type" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

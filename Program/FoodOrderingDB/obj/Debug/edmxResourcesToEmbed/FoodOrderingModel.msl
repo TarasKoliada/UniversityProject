@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OrderingModelStoreContainer" CdmEntityContainer="OrderingContext">
+    <EntitySetMapping Name="Administrator">
+      <EntityTypeMapping TypeName="OrderingModel.Administrator">
+        <MappingFragment StoreEntitySet="Administrator">
+          <ScalarProperty Name="Id" ColumnName="admin_id" />
+          <ScalarProperty Name="SiteId" ColumnName="site_id" />
+          <ScalarProperty Name="Name" ColumnName="admin_name" />
+          <ScalarProperty Name="Surname" ColumnName="admin_surname" />
+          <ScalarProperty Name="MiddleName" ColumnName="admin_middle_name" />
+          <ScalarProperty Name="Login" ColumnName="admin_login" />
+          <ScalarProperty Name="Password" ColumnName="admin_password" />
+          <ScalarProperty Name="Contact" ColumnName="admin_contact" />
+          <ScalarProperty Name="Preferences" ColumnName="admin_preferences" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer">
+      <EntityTypeMapping TypeName="OrderingModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="Id" ColumnName="customer_id" />
+          <ScalarProperty Name="Surname" ColumnName="customer_surname" />
+          <ScalarProperty Name="FirstName" ColumnName="customer_first_name" />
+          <ScalarProperty Name="MiddleName" ColumnName="customer_middle_name" />
+          <ScalarProperty Name="Email" ColumnName="customer_email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="customer_phone_number" />
+          <ScalarProperty Name="Username" ColumnName="customer_username" />
+          <ScalarProperty Name="Password" ColumnName="customer_password" />
+          <ScalarProperty Name="AccountStatus" ColumnName="customer_account_status" />
+          <ScalarProperty Name="Adress" ColumnName="customer_adress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dish">
+      <EntityTypeMapping TypeName="OrderingModel.Dish">
+        <MappingFragment StoreEntitySet="Dish">
+          <ScalarProperty Name="Id" ColumnName="dish_id" />
+          <ScalarProperty Name="Name" ColumnName="dish_name" />
+          <ScalarProperty Name="Price" ColumnName="dish_price" />
+          <ScalarProperty Name="MenuTypeId" ColumnName="menu_type_id" />
+          <ScalarProperty Name="Ingredients" ColumnName="dish_ingredients" />
+          <ScalarProperty Name="Status" ColumnName="dish_status" />
+          <ScalarProperty Name="Weight" ColumnName="dish_weight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee">
+      <EntityTypeMapping TypeName="OrderingModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Id" ColumnName="employee_id" />
+          <ScalarProperty Name="Siteid" ColumnName="site_id" />
+          <ScalarProperty Name="Surname" ColumnName="employee_surname" />
+          <ScalarProperty Name="FirstName" ColumnName="employee_first_name" />
+          <ScalarProperty Name="MiddleName" ColumnName="employee_middle_name" />
+          <ScalarProperty Name="Email" ColumnName="email_adress" />
+          <ScalarProperty Name="Contact" ColumnName="employee_contact" />
+          <ScalarProperty Name="Login" ColumnName="system_login" />
+          <ScalarProperty Name="Password" ColumnName="system_password" />
+          <ScalarProperty Name="Preferences" ColumnName="employee_preferences" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menu_type">
+      <EntityTypeMapping TypeName="OrderingModel.MenuType">
+        <MappingFragment StoreEntitySet="Menu_type">
+          <ScalarProperty Name="Id" ColumnName="menu_type_id" />
+          <ScalarProperty Name="Name" ColumnName="menu_type_name" />
+          <ScalarProperty Name="Description" ColumnName="type_description" />
+          <ScalarProperty Name="SiteId" ColumnName="site_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_details">
+      <EntityTypeMapping TypeName="OrderingModel.OrderDetails">
+        <MappingFragment StoreEntitySet="Order_details">
+          <ScalarProperty Name="Id" ColumnName="order_details_id" />
+          <ScalarProperty Name="OrderId" ColumnName="order_id" />
+          <ScalarProperty Name="DishId" ColumnName="dish_id" />
+          <ScalarProperty Name="NumberOfService" ColumnName="number_od_servings" />
+          <ScalarProperty Name="TotalDishPrice" ColumnName="total_dish_price" />
+          <ScalarProperty Name="Note" ColumnName="note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="OrderingModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="order_id" />
+          <ScalarProperty Name="CustomerId" ColumnName="customer_id" />
+          <ScalarProperty Name="CreatedDate" ColumnName="order_date" />
+          <ScalarProperty Name="TotalPrice" ColumnName="total_price" />
+          <ScalarProperty Name="Status" ColumnName="order_status" />
+          <ScalarProperty Name="EmployeeId" ColumnName="employee_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payment">
+      <EntityTypeMapping TypeName="OrderingModel.Payment">
+        <MappingFragment StoreEntitySet="Payment">
+          <ScalarProperty Name="Id" ColumnName="payment_id" />
+          <ScalarProperty Name="OrderId" ColumnName="order_id" />
+          <ScalarProperty Name="Price" ColumnName="price" />
+          <ScalarProperty Name="PaidBy" ColumnName="paid_by" />
+          <ScalarProperty Name="CreatedDate" ColumnName="payment_date" />
+          <ScalarProperty Name="EmployeeId" ColumnName="employee_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rating">
+      <EntityTypeMapping TypeName="OrderingModel.Rating">
+        <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="Id" ColumnName="rating_id" />
+          <ScalarProperty Name="DishId" ColumnName="dish_id" />
+          <ScalarProperty Name="Score" ColumnName="score" />
+          <ScalarProperty Name="Remarks" ColumnName="remarks" />
+          <ScalarProperty Name="CreatedDate" ColumnName="recorded_date" />
+          <ScalarProperty Name="CustomerId" ColumnName="customer_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Site_Info">
+      <EntityTypeMapping TypeName="OrderingModel.Site">
+        <MappingFragment StoreEntitySet="Site_Info">
+          <ScalarProperty Name="Id" ColumnName="site_id" />
+          <ScalarProperty Name="Name" ColumnName="site_name" />
+          <ScalarProperty Name="Description" ColumnName="site_description" />
+          <ScalarProperty Name="ContactInfo" ColumnName="site_contact_info" />
+          <ScalarProperty Name="LocationAdress" ColumnName="company_adress" />
+          <ScalarProperty Name="LastUpdate" ColumnName="last_update" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
