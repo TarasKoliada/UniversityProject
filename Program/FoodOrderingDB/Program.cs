@@ -1,4 +1,6 @@
 ﻿using FoodOrderingDB.Abstractions;
+using FoodOrderingDB.User_Interface;
+using FoodOrderingDB.User_Interface.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +28,22 @@ namespace FoodOrderingDB
                 var foundSite = GetSite(choise);
                 
             }*/
-            IRegistrable registrable = new CustomerRegister();
-            registrable.Register();
+
+
+            /*IRegistrable registrable = new CustomerRegister();
+            registrable.Register();*/
             //registrable = new EmployeeRegister();
 
-           /* ILoginable loginable = new CustomerLogin();
-            loginable.Login();*/
+
+
+
+
+
+
+
+            CustomerSiteMenu siteMenu = new CustomerSiteMenu();
+            siteMenu.ShowMenu();
+
 
         }
         public static Site GetSite(int id)

@@ -18,7 +18,7 @@ namespace FoodOrderingDB
 
             customer.AccountStatus = true;
 
-            Console.Write("Enter your Name: ");
+            Console.Write("\nEnter your Name: ");
             customer.FirstName = Console.ReadLine();
             Console.Write("Enter your Surname: ");
             customer.Surname = Console.ReadLine();

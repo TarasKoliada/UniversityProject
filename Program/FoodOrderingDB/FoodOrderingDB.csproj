@@ -67,6 +67,7 @@
     <Compile Include="Business Logic\Implementation\CustomerRegister.cs" />
     <Compile Include="Data Access\Implementation\CustomerDataProvider.cs" />
     <Compile Include="Data Access\Implementation\DbDataProcessor.cs" />
+    <Compile Include="Data Access\Implementation\SiteDataProvider.cs" />
     <Compile Include="Data Access\Interfaces\IDataProcessor.cs" />
     <Compile Include="Data Access\Interfaces\IDataProvider.cs" />
     <Compile Include="Dish.cs">
@@ -110,6 +111,8 @@
     <Compile Include="Site.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="User Interface\Abstractions\IMenu.cs" />
+    <Compile Include="User Interface\CustomerSiteMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
