@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FoodOrderingDB
 {
-    class CustomerLogin : ILogger
+    class CustomerLogin : ILogger<Customer>
     {
-        public void Login()
+        public Customer Login()
         {
             bool logged = false;
             int attemptsToLog = 0;
@@ -40,12 +40,15 @@ namespace FoodOrderingDB
                                 Login();
                             }
                         }
-                    } while (logged != true);                }
+                    } while (logged != true);
+                    return foundCustomer;
+                }
                 else
                 {
                     Console.WriteLine("The User with such Username and Email is not registered");
                     Login();
                 }
+                return null;
             }
 
         }

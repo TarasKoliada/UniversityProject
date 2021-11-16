@@ -60,6 +60,7 @@
     <Compile Include="Administrator.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Business Logic\Implementation\CustomerOrder.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
@@ -67,6 +68,7 @@
     <Compile Include="Business Logic\Implementation\CustomerRegister.cs" />
     <Compile Include="Data Access\Implementation\CustomerDataProvider.cs" />
     <Compile Include="Data Access\Implementation\DbDataProcessor.cs" />
+    <Compile Include="Data Access\Implementation\OrderDataProvider.cs" />
     <Compile Include="Data Access\Implementation\SiteDataProvider.cs" />
     <Compile Include="Data Access\Interfaces\IDataProcessor.cs" />
     <Compile Include="Data Access\Interfaces\IDataProvider.cs" />

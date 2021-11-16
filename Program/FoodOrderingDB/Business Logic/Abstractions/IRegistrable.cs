@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Abstractions
 {
-    interface IRegistrable
+    interface IRegistrable<T>
     {
-        void Register();
-        void SetInfoToDb<T>(T entity);
+        T Register();
+        void SetInfoToDb(T entity);
     }
 }

@@ -231,8 +231,7 @@ FOREIGN KEY (site_id) REFERENCES Site_Info(site_id);
 
 
 
-delete from Customer;
-DBCC CHECKIDENT ('Customer', RESEED, 0);
+
 
 INSERT INTO Site_Info(site_name, site_description, site_contact_info, company_adress) 
 VALUES ('BLACK & WHITE', 'Our restaurant offers a small but very tasty selection of dishes that will not leave anyone indifferent.', 'Mail: BlackAndWhite-offers@gmail.com, Hotline: +380672563715', 'Ukraine, Lviv, vul. Knyazya Romana 6');
@@ -255,3 +254,16 @@ INSERT INTO Dish(dish_name, dish_price, dish_ingredients, dish_status, dish_weig
 ('Pizza Bavaria', 11, 'Salami', 1, 670, 5),
 ('Pampushki', 20, 'Miaso', 1, 330, 3),
 ('Draniki', 3, 'Potato', 2, 100, 6)
+
+
+
+
+
+delete from Orders;
+DBCC CHECKIDENT ('Orders', RESEED, 0);
+
+delete from Order_details;
+DBCC CHECKIDENT ('Order_details', RESEED, 0);
+
+delete from Employee;
+DBCC CHECKIDENT ('Employee', RESEED, 0);

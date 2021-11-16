@@ -13,52 +13,10 @@ namespace FoodOrderingDB
     {
         static void Main(string[] args)
         {
-            /*using (var context = new OrderingContext())
-            {
-                Console.WriteLine("Choose site to visit: ");
-               
-                foreach (var site in context.Site_Info)
-                {
-                    Console.WriteLine($"{site.Id}) {site.Name}");
-                }
-
-                Console.Write("Your choise: ");
-                int choise = int.Parse(Console.ReadLine());
-
-                var foundSite = GetSite(choise);
-                
-            }*/
-
-
-            /*IRegistrable registrable = new CustomerRegister();
-            registrable.Register();*/
-            //registrable = new EmployeeRegister();
-
-
-
-
-
-
-
-
             CustomerSiteMenu siteMenu = new CustomerSiteMenu();
             siteMenu.ShowMenu();
-
-
+            var customer = new Customer();
         }
-        public static Site GetSite(int id)
-        {
-            using (var context = new OrderingContext())
-            {
-                foreach (var site in context.Site_Info)
-                {
-                    if (site.Id == id)
-                    {
-                        return site;
-                    }
-                }
-                return null;
-            } 
-        }
+        
     }
 }

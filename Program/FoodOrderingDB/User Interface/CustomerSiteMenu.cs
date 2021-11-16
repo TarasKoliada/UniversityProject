@@ -1,4 +1,5 @@
 ﻿using FoodOrderingDB.Abstractions;
+using FoodOrderingDB.Business_Logic.Implementation;
 using FoodOrderingDB.Data_Access.Implementation;
 using FoodOrderingDB.Data_Access.Interfaces;
 using System;
@@ -11,9 +12,10 @@ namespace FoodOrderingDB.User_Interface
 {
     class CustomerSiteMenu
     {
+        Customer _customer;
         public void ShowMenu()
         {
-            int choise;
+            int choise, siteNavigation;
             Console.WriteLine("Are you a new User or already have an account?");
             Console.WriteLine("  1) I'm a new User. Sign Up");
             Console.WriteLine("  2) I already have an account. Log In");
@@ -24,15 +26,34 @@ namespace FoodOrderingDB.User_Interface
                 switch (choise)
                 {
                     case 1:
-                        IRegistrable registrable = new CustomerRegister();
-                        registrable.Register();
+                        IRegistrable<Customer> registrable = new CustomerRegister();
+                        _customer = registrable.Register();
                         break;
                     case 2:
-                        ILogger logger = new CustomerLogin();
-                        logger.Login();
+                        ILogger<Customer> logger = new CustomerLogin();
+                        _customer = logger.Login();
                         break;
                 }
-                ChooseSite();
+                var site = ChooseSite();
+
+                var order = new CustomerOrder(_customer, site);
+
+                Console.WriteLine("  1) Create order");
+                Console.WriteLine("  2) Show my orders");
+                Console.WriteLine("  3) Show my profile info");
+                //Console.WriteLine("  4) Show my profile info");
+                Console.Write("Your choise: ");
+
+                 parsed = int.TryParse(Console.ReadLine(), out siteNavigation);
+                 if (parsed)
+                 {
+                     switch (siteNavigation)
+                     {
+                         case 1:
+                             order.Create();
+                             break;
+                     }
+                 }
             }
             else
             {
@@ -41,7 +62,7 @@ namespace FoodOrderingDB.User_Interface
             }
            
         }
-        private void ChooseSite()
+        private Site ChooseSite()
         {
             IDataProvider<Site> provider = new SiteDataProvider();
 
@@ -64,7 +85,8 @@ namespace FoodOrderingDB.User_Interface
 
                 if (site != null)
                 {
-                    Console.WriteLine($"\n  Great choise! Welcome to {site.Name}");
+                    Console.WriteLine($"\nGreat choise! Welcome to {site.Name}");
+                    return site;
                 }
                 else
                 {
@@ -77,8 +99,7 @@ namespace FoodOrderingDB.User_Interface
                 Console.WriteLine("You can only enter site Id's");
                 ChooseSite();
             }
-
-            
+            return null;
         }
         private Site GetSite(int id)
         {

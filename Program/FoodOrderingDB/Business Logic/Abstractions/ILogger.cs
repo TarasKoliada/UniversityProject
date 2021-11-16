@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Abstractions
 {
-    interface ILogger
+    interface ILogger<T>
     {
-        void Login();
+        T Login();
     }
 }

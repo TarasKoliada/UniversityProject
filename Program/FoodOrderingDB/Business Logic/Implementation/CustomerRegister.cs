@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace FoodOrderingDB
 {
-    class CustomerRegister : IRegistrable
+    class CustomerRegister : IRegistrable<Customer>
     {
 
-        public void Register()
+        public Customer Register()
         {
             Customer customer = new Customer();
 
@@ -41,14 +41,11 @@ namespace FoodOrderingDB
 
 
             SetInfoToDb(customer);
+            return customer;
         }
-
-        public void SetInfoToDb<T>(T entity)
+        public void SetInfoToDb(Customer entity)
         {
-            T newObj = (T)(object)entity;
-            Customer customer = (Customer)(object)newObj;
-
-            IDataProvider<Customer> provider = new CustomerDataProvider(customer);
+            IDataProvider<Customer> provider = new CustomerDataProvider(entity);
             IDataProcessor<Customer> dataSaver = new DbDataProcessor<Customer>();
             dataSaver.ProcessData(provider);
         }
