@@ -257,7 +257,12 @@ INSERT INTO Dish(dish_name, dish_price, dish_ingredients, dish_status, dish_weig
 
 
 
-
+INSERT INTO Administrator(site_id, admin_name, admin_surname, admin_middle_name, admin_login, admin_password, admin_contact, admin_preferences)
+VALUES
+(1, 'Artem', 'Poliakov', 'Ivanovych', 'artempoliakov01', 'admin01', '+380675621379', 1),
+(2, 'Victor', 'Lebedev', 'Maksymovych', 'victorlebedev02', 'admin02', '+380982351783', 0),
+(1, 'Anton', 'Bondar', 'Olehovych', 'antonbondar01', 'admin01', '+380689325561', 0),
+(2, 'Bohdan', 'Pantushenko', 'Tarasovych', 'bohdanpantushenko02', 'admin02', '+380973318943', 1)
 
 delete from Orders;
 DBCC CHECKIDENT ('Orders', RESEED, 0);

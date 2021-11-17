@@ -13,9 +13,8 @@ namespace FoodOrderingDB
     {
         static void Main(string[] args)
         {
-            CustomerSiteMenu siteMenu = new CustomerSiteMenu();
-            siteMenu.ShowMenu();
-            var customer = new Customer();
+            var menu = new SiteNavigation();
+            menu.ShowMenu();
         }
         
     }

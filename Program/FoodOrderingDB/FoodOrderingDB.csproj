@@ -60,16 +60,23 @@
     <Compile Include="Administrator.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Business Logic\Implementation\CustomerOrder.cs" />
+    <Compile Include="Business Logic\Implementation\Login\AdminLogin.cs" />
+    <Compile Include="Business Logic\Implementation\Order\CustomerOrder.cs" />
+    <Compile Include="Business Logic\Implementation\Register\EmployeeRegister.cs" />
+    <Compile Include="Business Logic\Static Classes\Login.cs" />
+    <Compile Include="Business Logic\Static Classes\Password.cs" />
+    <Compile Include="Business Logic\Static Classes\StaticSiteInfo.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Business Logic\Implementation\CustomerLogin.cs" />
-    <Compile Include="Business Logic\Implementation\CustomerRegister.cs" />
-    <Compile Include="Data Access\Implementation\CustomerDataProvider.cs" />
-    <Compile Include="Data Access\Implementation\DbDataProcessor.cs" />
-    <Compile Include="Data Access\Implementation\OrderDataProvider.cs" />
-    <Compile Include="Data Access\Implementation\SiteDataProvider.cs" />
+    <Compile Include="Business Logic\Implementation\Login\CustomerLogin.cs" />
+    <Compile Include="Business Logic\Implementation\Register\CustomerRegister.cs" />
+    <Compile Include="Data Access\Implementation\Providers\AdminDataProvider.cs" />
+    <Compile Include="Data Access\Implementation\Providers\CustomerDataProvider.cs" />
+    <Compile Include="Data Access\Implementation\Processors\DbDataProcessor.cs" />
+    <Compile Include="Data Access\Implementation\Providers\EmployeeDataProvider.cs" />
+    <Compile Include="Data Access\Implementation\Providers\OrderDataProvider.cs" />
+    <Compile Include="Data Access\Implementation\Providers\SiteDataProvider.cs" />
     <Compile Include="Data Access\Interfaces\IDataProcessor.cs" />
     <Compile Include="Data Access\Interfaces\IDataProvider.cs" />
     <Compile Include="Dish.cs">
@@ -114,7 +121,9 @@
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User Interface\Abstractions\IMenu.cs" />
+    <Compile Include="User Interface\AdminSiteMenu.cs" />
     <Compile Include="User Interface\CustomerSiteMenu.cs" />
+    <Compile Include="User Interface\SiteNavigation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

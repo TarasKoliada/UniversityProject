@@ -1,7 +1,6 @@
 ﻿using FoodOrderingDB.Abstractions;
 using FoodOrderingDB.Business_Logic.Implementation;
-using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Interfaces;
+using FoodOrderingDB.Business_Logic.Static_Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +33,7 @@ namespace FoodOrderingDB.User_Interface
                         _customer = logger.Login();
                         break;
                 }
-                var site = ChooseSite();
+                var site = StaticSiteInfo.ChooseSite();
 
                 var order = new CustomerOrder(_customer, site);
 
@@ -44,74 +43,22 @@ namespace FoodOrderingDB.User_Interface
                 //Console.WriteLine("  4) Show my profile info");
                 Console.Write("Your choise: ");
 
-                 parsed = int.TryParse(Console.ReadLine(), out siteNavigation);
-                 if (parsed)
-                 {
-                     switch (siteNavigation)
-                     {
-                         case 1:
-                             order.Create();
-                             break;
-                     }
-                 }
+                parsed = int.TryParse(Console.ReadLine(), out siteNavigation);
+                if (parsed)
+                {
+                    switch (siteNavigation)
+                    {
+                        case 1:
+                            order.Create();
+                            break;
+                    }
+                }
             }
             else
             {
                 Console.WriteLine("\nSelect the first or second option\n");
                 ShowMenu();
             }
-           
-        }
-        private Site ChooseSite()
-        {
-            IDataProvider<Site> provider = new SiteDataProvider();
-
-            int iterator = 0;
-            int siteId;
-           
-            Console.WriteLine("\nChoose site to visit: ");
-
-            foreach (var sites in provider.GetContext())
-            {
-                Console.WriteLine($"  {++iterator}) {sites.Name}");
-            }
-
-            Console.Write("Your choise: ");
-            var parsed = int.TryParse(Console.ReadLine(), out siteId);
-
-            if (parsed)
-            {
-                var site = GetSite(siteId);
-
-                if (site != null)
-                {
-                    Console.WriteLine($"\nGreat choise! Welcome to {site.Name}");
-                    return site;
-                }
-                else
-                {
-                    Console.WriteLine("\nThere is no such site in the list, choose other");
-                    ChooseSite();
-                }
-            }
-            else
-            {
-                Console.WriteLine("You can only enter site Id's");
-                ChooseSite();
-            }
-            return null;
-        }
-        private Site GetSite(int id)
-        {
-            IDataProvider<Site> provider = new SiteDataProvider();
-            foreach (var site in provider.GetContext())
-            {
-                if (site.Id == id)
-                {
-                    return site;
-                }
-            }
-            return null;
         }
 
     }

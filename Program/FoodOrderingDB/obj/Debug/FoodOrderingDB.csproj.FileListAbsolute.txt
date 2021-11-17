@@ -5,7 +5,6 @@ D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Баз
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\bin\Debug\EntityFramework.SqlServer.dll
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\bin\Debug\EntityFramework.xml
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\bin\Debug\EntityFramework.SqlServer.xml
-D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.csproj.AssemblyReference.cache
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.csproj.CoreCompileInputs.cache
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.csproj.CopyComplete
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.exe
