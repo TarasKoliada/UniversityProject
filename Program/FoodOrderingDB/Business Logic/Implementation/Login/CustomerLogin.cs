@@ -30,13 +30,14 @@ namespace FoodOrderingDB
                     var pass = Console.ReadLine();
                     if (pass == _customer.Password)
                     {
-                        Console.WriteLine($"\nSuccess! Welcome {_customer.FirstName}!");
                         logged = true;
                     }
                     else
                     {
                         ++attemptsToLog;
-                        Console.WriteLine("Wrong Password\n");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nWrong Password\n");
+                        Console.ResetColor();
                         if (attemptsToLog == 4)
                         {
                             Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");
@@ -49,7 +50,9 @@ namespace FoodOrderingDB
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The User with such Username and Email is not registered");
+                Console.ResetColor();
                 Login();
                 return null;
             }

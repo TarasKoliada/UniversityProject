@@ -9,3 +9,4 @@ D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Баз
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.csproj.CopyComplete
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.exe
 D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.pdb
+D:\Laboratories\Курсові\Курсова 2 курс 1 семестр Бази Даних\Program\FoodOrderingDB\obj\Debug\FoodOrderingDB.csproj.AssemblyReference.cache

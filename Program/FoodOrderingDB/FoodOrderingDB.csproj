@@ -61,10 +61,12 @@
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Business Logic\Implementation\Login\AdminLogin.cs" />
-    <Compile Include="Business Logic\Implementation\Order\CustomerOrder.cs" />
+    <Compile Include="Business Logic\Implementation\Ordering\CustomerOrder.cs" />
+    <Compile Include="Business Logic\Implementation\Ordering\EmployeeSetter.cs" />
     <Compile Include="Business Logic\Implementation\Register\EmployeeRegister.cs" />
-    <Compile Include="Business Logic\Static Classes\Login.cs" />
-    <Compile Include="Business Logic\Static Classes\Password.cs" />
+    <Compile Include="Business Logic\Implementation\Login\Login.cs" />
+    <Compile Include="Business Logic\Implementation\Register\Password.cs" />
+    <Compile Include="Business Logic\Static Classes\StaticCustomerInfo.cs" />
     <Compile Include="Business Logic\Static Classes\StaticSiteInfo.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>

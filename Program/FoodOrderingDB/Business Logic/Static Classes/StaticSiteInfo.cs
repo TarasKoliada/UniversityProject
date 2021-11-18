@@ -10,22 +10,26 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 {
     public static class StaticSiteInfo
     {
+        private static IDataProvider<Site> provider = new SiteDataProvider();
         public static Site ChooseSite()
         {
-            IDataProvider<Site> provider = new SiteDataProvider();
 
             int iterator = 0;
             int siteId;
 
-            Console.WriteLine("\nChoose site to visit: ");
+            Console.WriteLine("\nChoose site to visit: \n");
 
             foreach (var sites in provider.GetContext())
             {
-                Console.WriteLine($"  {++iterator}) {sites.Name}");
+                Console.Write($"  {++iterator})");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($" {sites.Name}");
+                Console.ResetColor();
             }
 
-            Console.Write("Your choise: ");
+            Console.Write("\nYour choise: ");
             var parsed = int.TryParse(Console.ReadLine(), out siteId);
+            Console.Clear();
 
             if (parsed)
             {
@@ -33,7 +37,10 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 
                 if (site != null)
                 {
-                    Console.WriteLine($"\nGreat choise! Welcome to {site.Name}");
+                    Console.Write($"\nGreat choise! Welcome to ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"{site.Name}");
+                    Console.ResetColor();
                     return site;
                 }
                 else
@@ -52,13 +59,12 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 
         public static int GetSitesCount()
         {
-            IDataProvider<Site> provider = new SiteDataProvider();
+            
             return provider.GetContext().Count();
         }
 
         public static void GetAllSites()
         {
-            IDataProvider<Site> provider = new SiteDataProvider();
             foreach (var item in provider.GetContext())
             {
                 Console.WriteLine($"{item.Id}) {item.Name}");
@@ -67,7 +73,6 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
         }
         public static Site GetSiteById(int id)
         {
-            IDataProvider<Site> provider = new SiteDataProvider();
             foreach (var site in provider.GetContext())
             {
                 if (site.Id == id)
@@ -78,6 +83,43 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             return null;
         }
 
-        
+        public static void ShowSiteMenu(Site site)
+        {
+            var menuCounter = 0;
+            var dishCounter = 0;
+            Console.WriteLine();
+            foreach (var menuTypes in site.MenuType)
+            {
+                Console.WriteLine($"\n {++menuCounter}) {menuTypes.Name}");
+                foreach (var dishes in menuTypes.Dish)
+                {
+                    Console.Write($"    {++dishCounter}. ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write($"{dishes.Name} ");
+                    Console.ResetColor();
+                    Console.Write($" | Weight: {dishes.Weight} | ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($" Price: {dishes.Price}$");
+                    Console.ResetColor();
+                }
+            }
+        }
+
+        public static void GetInfo(Site site)
+        {
+            Console.WriteLine($"\n  Id: {site.Id}");
+            Console.WriteLine($"  Name: {site.Name}");
+            Console.WriteLine($"  Description: {site.Description}");
+            Console.WriteLine($"  Location: {site.LocationAdress}");
+            Console.WriteLine($"  Contact info: {site.ContactInfo}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n  Administrators: ");
+            Console.ResetColor();
+            foreach (var admin in site.Administrator)
+            {
+                Console.WriteLine($"  ID: {admin.Id} | Full Name: {admin.Name}  {admin.MiddleName}  {admin.Surname} |  Hotline: {admin.Contact}");
+            }
+        }
+
     }
 }

@@ -12,8 +12,10 @@ namespace FoodOrderingDB.User_Interface
     {
         public void ShowMenu()
         {
-            /*EmployeeRegister employee = new EmployeeRegister(1);
-            employee.Register();*/
+            //EmployeeRegister employee = new EmployeeRegister(1);
+            //employee.Register();
+            CustomerSiteMenu menu = new CustomerSiteMenu();
+            menu.ShowMenu();
         }
     }
 }
