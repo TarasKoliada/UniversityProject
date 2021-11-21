@@ -267,8 +267,14 @@ VALUES
 delete from Orders;
 DBCC CHECKIDENT ('Orders', RESEED, 0);
 
+delete from Customer;
+DBCC CHECKIDENT ('Customer', RESEED, 0);
+
 delete from Order_details;
 DBCC CHECKIDENT ('Order_details', RESEED, 0);
 
 delete from Employee;
 DBCC CHECKIDENT ('Employee', RESEED, 0);
+
+delete from Payment;
+DBCC CHECKIDENT ('Payment', RESEED, 0);

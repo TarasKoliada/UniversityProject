@@ -43,7 +43,8 @@ namespace FoodOrderingDB.User_Interface
                         _customer = logger.Login();
                         break;
                     case 3:
-                        CloseProgram();
+                        var navigation = new SiteNavigation();
+                        navigation.ShowMenu();
                         break;
                 }
                 Console.Clear();
@@ -149,10 +150,6 @@ namespace FoodOrderingDB.User_Interface
                         break;
                 }
             }
-        }
-        private void CloseProgram()
-        {
-            Process.GetCurrentProcess().Kill();
         }
     }
 }

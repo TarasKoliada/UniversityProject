@@ -17,7 +17,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             bool logged = false;
             var provider = GetProvider();
             var attemptsToLog = 0;
-            Console.Write("\nEnter your Login: ");
+            Console.Write("Enter your Login: ");
             var login = Console.ReadLine();
             administrator = provider.GetContext().FirstOrDefault(admin => admin.Login == login);
             if (administrator != null)
@@ -28,16 +28,26 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                     var password = Console.ReadLine();
                     if (administrator.Password == password)
                     {
-                        Console.WriteLine($"\nSuccess! Welcome {administrator.Name} {administrator.MiddleName}!");
+                        Console.Clear();
+                        Console.Write($"\nSuccess! Welcome ");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine($"{administrator.Name} {administrator.MiddleName}!\n");
+                        Console.ResetColor();
                         logged = true;
                     }
                     else
                     {
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Wrong Password");
+                        Console.ResetColor();
                         ++attemptsToLog;
                         if (attemptsToLog == 4)
                         {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");
+                            Console.ResetColor();
                             Login();
                         }
                     }
@@ -47,7 +57,10 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             }
             else
             {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The Administrator with such Login is not registered");
+                Console.ResetColor();
                 Login();
                 return null;
             }

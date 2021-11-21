@@ -564,7 +564,8 @@
         </Association>
         <Association Name="FK_Orders_To_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Orders" Type="OrderingModel.Order" Multiplicity="*" />
+          <End Role="Orders" Type="OrderingModel.Order" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Id" />

@@ -69,37 +69,72 @@ namespace FoodOrderingDB.Business_Logic.Implementation
         private void SetDetails()
         {
             var details = new OrderDetails();
+            bool parsed;
             StaticSiteInfo.ShowSiteMenu(_site);
 
             details.OrderId = _order.Id;
 
             Console.Write("\n\nEnter the Dish Id you want to add to cart: ");
-            int dishId = int.Parse(Console.ReadLine());
             var dishes = GetSiteDishes();
-            details.DishId = dishes[dishId - 1].Id;
-
-            Console.Write("How many servings of this Dish you want to order: ");
-            details.NumberOfService = int.Parse(Console.ReadLine());
-
-            Console.Write("Add some order notes? y/n : ");
-            var setNotes = Console.ReadLine();
-
-            if (setNotes == "y" || setNotes == "Y" || setNotes == "Yes" || setNotes == "YES")
+            parsed = int.TryParse(Console.ReadLine(), out int dishId);
+            if (parsed)
             {
-                Console.Write("Write Notes you want to add: ");
-                details.Note = Console.ReadLine();
+                try
+                {
+                    details.DishId = dishes[dishId - 1].Id;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("There is no such Dish in the menu");
+                    SetDetails();
+                }
+
+
+                do
+                {
+                    Console.Write("How many servings of this Dish you want to order: ");
+                    parsed = int.TryParse(Console.ReadLine(), out int service);
+                    if (parsed)
+                    {
+                        details.NumberOfService = service;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nWrong Input format\n");
+                        Console.ResetColor();
+                    }
+                } while (!parsed);
+                
+
+                Console.Write("Add some order notes? y/n : ");
+                var setNotes = Console.ReadLine();
+
+                if (setNotes == "y" || setNotes == "Y" || setNotes == "Yes" || setNotes == "YES")
+                {
+                    Console.Write("Write Notes you want to add: ");
+                    details.Note = Console.ReadLine();
+                }
+
+                CalculateDishPrice(details);
+                SaveOrderDetails(details);
+
+                Console.Write("\nAdd one more Dish? y/n: ");
+                var addMore = Console.ReadLine();
+                if (addMore == "y" || addMore == "Y" || addMore == "Yes" || addMore == "YES")
+                {
+                    Console.Clear();
+                    SetDetails();
+                }
             }
-
-            CalculateDishPrice(details);
-            SaveOrderDetails(details);
-
-            Console.Write("\nAdd one more Dish? y/n: ");
-            var addMore = Console.ReadLine();
-            if (addMore == "y" || addMore == "Y" || addMore == "Yes" || addMore == "YES")
+            else
             {
-                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nWrong Input format\n");
+                Console.ResetColor();
                 SetDetails();
             }
+            
             Console.Clear();
 
         }

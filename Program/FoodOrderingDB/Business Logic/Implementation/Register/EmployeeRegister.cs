@@ -4,6 +4,7 @@ using FoodOrderingDB.Data_Access.Implementation;
 using FoodOrderingDB.Data_Access.Implementation.Providers;
 using FoodOrderingDB.Data_Access.Interfaces;
 using System;
+using FoodOrderingDB.Business_Logic.Implementation.Log_in;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,10 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
 
             var site = StaticSiteInfo.GetSiteById(employee.Siteid);
 
-            Console.WriteLine($"Adding an Employee to site '{site.Name}'");
+            Console.Write($"Adding an Employee to site ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"'{site.Name}'");
+            Console.ResetColor();
             
 
             Console.Write("\nEnter Employee name: ");
@@ -49,20 +53,33 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             if (choise == "Y" || choise == "y")
             {
                 employee.Preferences = true;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("   \nPreferences have been established");
+                Console.ResetColor();
             }
             else
             {
                 employee.Preferences = false;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("   \nPreferences have not been established");
+                Console.ResetColor();
             }
-
+            
             employee.Login = Login.Generate(employee.FirstName, employee.Surname);
-            Console.WriteLine($"\nGenerated Login: {employee.Login}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"\nGenerated Login: ");
+            Console.ResetColor();
+            Console.WriteLine($"{employee.Login}");
 
             employee.Password = Password.Generate();
-            Console.WriteLine($"Generated Password: {employee.Password}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"Generated Password: ");
+            Console.ResetColor();
+            Console.WriteLine($"{employee.Password}");
 
+            Console.WriteLine("\nPress any key to turn back: ");
+            Console.ReadKey();
+            Console.Clear();
 
             SetInfoToDb(employee);
 

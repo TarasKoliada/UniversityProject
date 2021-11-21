@@ -24,8 +24,45 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Ordering
             }
             else
             {
-                return 1;
+                var context = new OrderingContext();
+                foreach (var item in context.Employee)
+                {
+                    return item.Id;
+                }
             }
+            return -1;
+        }
+        public static int GetChangedEmployeeId(Employee deletedEmployee)
+        {
+            var siteWorkers = GetSiteEmployee(deletedEmployee.Siteid);
+            var modifiedWorkers = new List<Employee>();
+            foreach (var item in siteWorkers)
+            {
+                if (item.Id != deletedEmployee.Id)
+                {
+                    modifiedWorkers.Add(item);
+                }
+            }
+
+            if (modifiedWorkers.Count > 2)
+            {
+                var minimalOrdersCount = siteWorkers.Min(a => a.Order.Count);
+                var employeeIds = GetWantedEmployeesId(minimalOrdersCount, siteWorkers);
+
+                return employeeIds[new Random().Next(0, employeeIds.Count)];
+            }
+            else if (modifiedWorkers.Count == 2)
+            {
+                var context = new OrderingContext();
+                foreach (var item in context.Employee)
+                {
+                    if (item.Id != deletedEmployee.Id)
+                    {
+                        return item.Id;
+                    }
+                }
+            }
+            return -1;
         }
         private static List<Employee> GetSiteEmployee(int id)
         {
