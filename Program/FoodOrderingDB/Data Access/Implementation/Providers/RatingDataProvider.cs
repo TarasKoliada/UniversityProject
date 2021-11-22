@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Data_Access.Implementation.Providers
 {
-    class OrderDetailsDataProvider : IDataProvider<OrderDetails>
+    class RatingDataProvider : IDataProvider<Rating>
     {
-        OrderDetails _details;
         OrderingContext context = new OrderingContext();
-        public OrderDetailsDataProvider(OrderDetails details)
+        Rating _rating;
+        public RatingDataProvider(Rating rating)
         {
-            _details = details;
+            _rating = rating;
         }
-        public DbSet<OrderDetails> GetContext()
+        public DbSet<Rating> GetContext()
         {
-            return context.Order_details;
+            return context.Rating;
         }
 
-        public OrderDetails GetEntity()
+        public Rating GetEntity()
         {
-            return _details;
+            return _rating;
         }
 
         public void SaveData()

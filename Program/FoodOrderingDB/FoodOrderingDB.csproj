@@ -62,6 +62,7 @@
     <Compile Include="Business Logic\Abstractions\IRegistrable.cs" />
     <Compile Include="Business Logic\Implementation\Log in\AdminLogin.cs" />
     <Compile Include="Business Logic\Implementation\Log in\EmployeeLogin.cs" />
+    <Compile Include="Business Logic\Implementation\Register\RatingRegister.cs" />
     <Compile Include="Business Logic\Ordering\CustomerOrder.cs" />
     <Compile Include="Business Logic\Ordering\EmployeeSetter.cs" />
     <Compile Include="Business Logic\Implementation\Register\EmployeeRegister.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Business Logic\Static Classes\StaticAdminInfo.cs" />
     <Compile Include="Business Logic\Static Classes\StaticCustomerInfo.cs" />
     <Compile Include="Business Logic\Static Classes\StaticEmployeeInfo.cs" />
+    <Compile Include="Business Logic\Static Classes\StaticRatingInfo.cs" />
     <Compile Include="Business Logic\Static Classes\StaticSiteInfo.cs" />
     <Compile Include="Business Logic\Implementation\Log in\CustomerLogin.cs" />
     <Compile Include="Business Logic\Implementation\Register\CustomerRegister.cs" />
@@ -83,8 +85,8 @@
     <Compile Include="Data Access\Implementation\Processors\DbDataProcessor.cs" />
     <Compile Include="Data Access\Implementation\Providers\EmployeeDataProvider.cs" />
     <Compile Include="Data Access\Implementation\Providers\OrderDataProvider.cs" />
-    <Compile Include="Data Access\Implementation\Providers\OrderDetailsDataProvider.cs" />
     <Compile Include="Data Access\Implementation\Providers\PaymentDataProvider.cs" />
+    <Compile Include="Data Access\Implementation\Providers\RatingDataProvider.cs" />
     <Compile Include="Data Access\Implementation\Providers\SiteDataProvider.cs" />
     <Compile Include="Data Access\Interfaces\IDataProcessor.cs" />
     <Compile Include="Data Access\Interfaces\IDataProvider.cs" />

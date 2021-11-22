@@ -42,6 +42,33 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             }
             Console.WriteLine("\n\n");
         }
+        public static void ChangePassword()
+        {
+            Console.Write("\nEnter your previous password: ");
+            var oldPass = Console.ReadLine();
+
+            var context = new OrderingContext();
+            var employee = context.Employee.Where(e => e.Password == oldPass).FirstOrDefault();
+            if (employee != null)
+            {
+                Console.Write("\nEnter your new password: ");
+                var newPass = Console.ReadLine();
+
+                employee.Password = newPass;
+
+                context.SaveChanges();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nWrong password");
+                Console.ResetColor();
+                ChangePassword();
+            }
+
+            Console.Clear();
+
+        }
         public static void GetCurrentEmployeeInfo(Employee employee)
         {
             var provider = new PaymentDataProvider(null);

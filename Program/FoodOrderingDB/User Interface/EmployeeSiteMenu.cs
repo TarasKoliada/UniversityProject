@@ -37,6 +37,7 @@ namespace FoodOrderingDB.User_Interface
                     case 1:
                         Console.Clear();
                         StaticEmployeeInfo.GetCurrentEmployeeInfo(_employee);
+                        ChangePassMenu();
                         ShowMenu();
                         break;
                     case 2:
@@ -73,6 +74,32 @@ namespace FoodOrderingDB.User_Interface
                 Console.ResetColor();
                 ShowMenu();
             }
+        }
+        private void ChangePassMenu()
+        {
+            Console.WriteLine("\n  1) Change password");
+            Console.WriteLine("  2) Turn back");
+            Console.Write("  Your choise: ");
+            int choiseProfile;
+            var parsed = int.TryParse(Console.ReadLine(), out choiseProfile);
+            if (parsed)
+            {
+                switch (choiseProfile)
+                {
+                    case 1:
+                        StaticEmployeeInfo.ChangePassword();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Wrong input");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+
         }
         private void Login()
         {

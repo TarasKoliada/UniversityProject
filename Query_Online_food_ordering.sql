@@ -177,7 +177,7 @@ ALTER COLUMN paid_by VARCHAR(50) NOT NULL;
 CREATE TABLE Rating(
 	rating_id INT IDENTITY(1, 1) NOT NULL,
 	dish_id INT NOT NULL,
-	score VARCHAR(1) NOT NULL, /*In VS Int.TryParse(score)*/
+	score VARCHAR(1) NOT NULL, 
 	remarks VARCHAR NOT NULL,
 	recorded_date DATETIME NOT NULL,
 	customer_id INT NOT NULL

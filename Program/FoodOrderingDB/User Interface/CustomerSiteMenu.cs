@@ -8,6 +8,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using FoodOrderingDB.Business_Logic.Implementation.Register;
 
 namespace FoodOrderingDB.User_Interface
 {
@@ -82,6 +83,7 @@ namespace FoodOrderingDB.User_Interface
                         break;
                     case 2:
                         StaticCustomerInfo.GetFullInfo(_customer);
+                        ChangePassMenu();
                         ProfileMenu();
                         break;
                     case 3:
@@ -104,6 +106,33 @@ namespace FoodOrderingDB.User_Interface
                 ProfileMenu();
             }
         }
+
+        private void ChangePassMenu()
+        {
+            Console.WriteLine("\n  1) Change password");
+            Console.WriteLine("  2) Turn back");
+            Console.Write("  Your choise: ");
+            int choiseProfile;
+            var parsed = int.TryParse(Console.ReadLine(), out choiseProfile);
+            if (parsed)
+            {
+                switch (choiseProfile)
+                {
+                    case 1:
+                        StaticCustomerInfo.ChangePassword();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Wrong input");
+                        Console.ResetColor();
+                        break;
+                }
+            }
+            
+        }
         private void ChooseSiteMenu()
         {
              _site = StaticSiteInfo.ChooseSite();
@@ -116,8 +145,9 @@ namespace FoodOrderingDB.User_Interface
             Console.WriteLine("\n\n--------MENU------------");
             Console.WriteLine("\n 1) Create order");
             Console.WriteLine(" 2) Show my orders");
-            Console.WriteLine(" 3) Show site info");
-            Console.WriteLine(" 4) Turn back\n");
+            Console.WriteLine(" 3) Leave a review about the dish");
+            Console.WriteLine(" 4) Show site info");
+            Console.WriteLine(" 5) Turn back\n");
             Console.WriteLine("------------------------");
             Console.Write("\nYour choise: ");
 
@@ -136,10 +166,14 @@ namespace FoodOrderingDB.User_Interface
                         EnteredSiteMenu();
                         break;
                     case 3:
+                        var rating = new RatingRegister(_customer, _site);
+                        rating.Register();
+                        break;
+                    case 4:
                         StaticSiteInfo.GetInfo(_site);
                         EnteredSiteMenu();
                         break;
-                    case 4:
+                    case 5:
                         ProfileMenu();
                         break;
                     default:

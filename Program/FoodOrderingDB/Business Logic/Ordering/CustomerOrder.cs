@@ -85,7 +85,10 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                 }
                 catch (Exception)
                 {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("There is no such Dish in the menu");
+                    Console.ResetColor();
                     SetDetails();
                 }
 
@@ -100,6 +103,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                     }
                     else
                     {
+                        Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nWrong Input format\n");
                         Console.ResetColor();

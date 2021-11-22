@@ -53,13 +53,21 @@ namespace FoodOrderingDB.User_Interface
                         }
                         else
                         {
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("You have not preferences to remove employee");
+                            Console.ResetColor();
                         }
                         ShowMenu();
                         break;
                     case 4:
                         Console.Clear();
                         StaticAdminInfo.GetFullInfo(_admin);
+                        ShowMenu();
+                        break;
+                    case 5:
+                        Console.Clear();
+                        StaticRatingInfo.GetRating(_admin.Site);
                         ShowMenu();
                         break;
                     case 6:

@@ -76,12 +76,12 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             Console.Write($"Generated Password: ");
             Console.ResetColor();
             Console.WriteLine($"{employee.Password}");
+            
+            SetInfoToDb(employee);
 
             Console.WriteLine("\nPress any key to turn back: ");
             Console.ReadKey();
             Console.Clear();
-
-            SetInfoToDb(employee);
 
             return employee;
         }
