@@ -1,64 +1,24 @@
-﻿using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Implementation.Providers;
-using FoodOrderingDB.Data_Access.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity;
 using FoodOrderingDB.Business_Logic.Implementation.Ordering;
+using FoodOrderingDB.Repositories;
 
 namespace FoodOrderingDB.Business_Logic.Remove
 {
     class EmployeeRemover
     {
-        Administrator _admin;
+        private readonly Administrator _admin;
+        private readonly UnitOfWork _unitOfWork;
         public EmployeeRemover(Administrator admin)
         {
-             _admin = admin;
+            _unitOfWork = new UnitOfWork();
+            _admin = admin;
         }
         public void Remove()
         {
-            var context = new OrderingContext();
-            
             Console.WriteLine("Enter Employee Id you want to remove: ");
             var parsed = int.TryParse(Console.ReadLine(), out int removeId);
-            if (parsed)
-            {
-                var deleteEmployee = context.Employee
-                    .Where(e => e.Id == removeId)
-                    .FirstOrDefault();
-
-                var newEmployeeId = EmployeeSetter.GetChangedEmployeeId(deleteEmployee);
-                if (newEmployeeId != -1)
-                {
-                    foreach (var order in context.Orders)
-                    {
-                        if (order.EmployeeId == deleteEmployee.Id)
-                        {
-                            order.EmployeeId = newEmployeeId;
-                            foreach (var payment in order.Payment)
-                            {
-                                payment.EmployeeId = newEmployeeId;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You can not delete this Employee, because he is the last worker");
-                    Console.ResetColor();
-                    return;
-                }
-
-                context.Employee.Remove(deleteEmployee);
-                context.SaveChanges();
-            }
-            else
+            if (!parsed)
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -66,6 +26,33 @@ namespace FoodOrderingDB.Business_Logic.Remove
                 Console.ResetColor();
                 Remove();
             }
+
+            var deleteEmployee = _unitOfWork.Employees.GetAll().FirstOrDefault(e => e.Id == removeId);
+
+            var newEmployeeId = EmployeeSetter.GetChangedEmployeeId(deleteEmployee);
+            if (newEmployeeId == -1)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("You can not delete this Employee, because he is the last worker");
+                Console.ResetColor();
+                return;
+            }
+            foreach (var order in _unitOfWork.Orders.GetAll().Where(o => o.EmployeeId == deleteEmployee.Id))
+            {
+                order.EmployeeId = newEmployeeId;
+                foreach (var payment in order.Payment)
+                {
+                    payment.EmployeeId = newEmployeeId;
+                }
+            }
+
+            _unitOfWork.Employees.Delete(deleteEmployee.Id);
+
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\bEmployee removed\n");
+            Console.ResetColor();
         }
     }
 }

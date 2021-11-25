@@ -1,26 +1,25 @@
-﻿using FoodOrderingDB.Data_Access.Implementation.Providers;
-using FoodOrderingDB.Data_Access.Interfaces;
+﻿using FoodOrderingDB.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FoodOrderingDB.Business_Logic.Static_Classes
 {
     class StaticEmployeeInfo
     {
-        public static void GetSiteEmployees(Site site)
+        private static UnitOfWork _unitOfWork;
+        public static void GetSiteEmployees(int siteId)
         {
-            IDataProvider<Employee> provider = new EmployeeDataProvider(null);
-            foreach (var employee in provider.GetContext())
+            _unitOfWork = new UnitOfWork();
+            foreach (var employee in _unitOfWork.Employees.GetAll().Where(s => s.Siteid == siteId))
             {
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write($"ID: {employee.Id} ");
                 Console.ResetColor();
                 Console.WriteLine($"{employee.FirstName} {employee.Surname} {employee.MiddleName} | {employee.Contact} | {employee.Email}");
-                if (employee.Order.Count > 0)
+
+                if (_unitOfWork.Orders.GetAll().Where(o => o.EmployeeId == employee.Id).ToList().Count > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("  Orders: ");
@@ -42,37 +41,51 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             }
             Console.WriteLine("\n\n");
         }
-        public static void ChangePassword()
+        public static void ChangePassword(int id)
         {
+            _unitOfWork = new UnitOfWork();
+            var foundEmployee = _unitOfWork.Employees.GetAll().FirstOrDefault(e => e.Id == id);
+            if (foundEmployee == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nThe employee with such id was not found");
+                Console.ResetColor();
+                return;
+            }
             Console.Write("\nEnter your previous password: ");
             var oldPass = Console.ReadLine();
 
-            var context = new OrderingContext();
-            var employee = context.Employee.Where(e => e.Password == oldPass).FirstOrDefault();
-            if (employee != null)
+            
+            if (foundEmployee.Password != oldPass)
             {
-                Console.Write("\nEnter your new password: ");
-                var newPass = Console.ReadLine();
-
-                employee.Password = newPass;
-
-                context.SaveChanges();
-            }
-            else
-            {
+                Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nWrong password");
                 Console.ResetColor();
-                ChangePassword();
+                return;
             }
+
+            Console.Write("\nEnter your new password: ");
+            var newPass = Console.ReadLine();
+
+            foundEmployee.Password = newPass;
+            _unitOfWork.Employees.SaveData();
 
             Console.Clear();
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Password Changed!\n");
+            Console.ResetColor();
+            return;
+
         }
-        public static void GetCurrentEmployeeInfo(Employee employee)
+        public static void GetCurrentEmployeeInfo(int id)
         {
-            var provider = new PaymentDataProvider(null);
-            
+            _unitOfWork = new UnitOfWork();
+            var employee = _unitOfWork.Employees.Get(id);
+
+            var paymentsCount = _unitOfWork.Payments.GetAll().Count(p => p.EmployeeId == employee.Id);
+
             Console.WriteLine($"\n  Id: {employee.Id}");
             Console.WriteLine($"  Name: {employee.FirstName}");
             Console.WriteLine($"  Surname: {employee.Surname}");
@@ -81,13 +94,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             Console.WriteLine($"  Phone number: {employee.Contact}");
             Console.WriteLine($"  Preferences: {employee.Preferences}");
             Console.WriteLine($"  Orders count: {employee.Order.Count}");
-            foreach (var payment in provider.GetContext())
-            {
-                if (payment.EmployeeId == employee.Id)
-                {
-                    Console.WriteLine($"  Processed orders Count: {payment.Employee.Payment.Count}");
-                }
-            }
+            Console.WriteLine($"  Processed orders Count: {paymentsCount}");
             Console.Write($"  Username: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{employee.Login}");

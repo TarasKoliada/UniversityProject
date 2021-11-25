@@ -278,3 +278,6 @@ DBCC CHECKIDENT ('Employee', RESEED, 0);
 
 delete from Payment;
 DBCC CHECKIDENT ('Payment', RESEED, 0);
+
+delete from Rating;
+DBCC CHECKIDENT ('Rating', RESEED, 0);

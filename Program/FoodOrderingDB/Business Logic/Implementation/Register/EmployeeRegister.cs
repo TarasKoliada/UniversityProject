@@ -1,22 +1,17 @@
 ﻿using FoodOrderingDB.Abstractions;
 using FoodOrderingDB.Business_Logic.Static_Classes;
-using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Implementation.Providers;
-using FoodOrderingDB.Data_Access.Interfaces;
 using System;
-using FoodOrderingDB.Business_Logic.Implementation.Log_in;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FoodOrderingDB.Repositories;
 
 namespace FoodOrderingDB.Business_Logic.Implementation.Register
 {
     class EmployeeRegister : IRegistrable<Employee>
     {
-        int _siteId;
+        private readonly UnitOfWork _unitOfWork;
+        private readonly int _siteId;
         public EmployeeRegister(int siteId)
         {
+            _unitOfWork = new UnitOfWork();
             _siteId = siteId;
         }
         public Employee Register()
@@ -25,7 +20,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
 
             employee.Siteid = _siteId;
 
-            var site = StaticSiteInfo.GetSiteById(employee.Siteid);
+            var site = _unitOfWork.Sites.Get(employee.Siteid);
 
             Console.Write($"Adding an Employee to site ");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -88,9 +83,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
 
         public void SetInfoToDb(Employee entity)
         {
-            IDataProvider<Employee> provider = new EmployeeDataProvider(entity);
-            IDataProcessor<Employee> dataSaver = new DbDataProcessor<Employee>();
-            dataSaver.ProcessData(provider);
+            _unitOfWork.Employees.Add(entity);
         }
     }
 }

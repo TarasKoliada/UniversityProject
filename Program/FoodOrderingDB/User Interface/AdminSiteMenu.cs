@@ -4,10 +4,6 @@ using FoodOrderingDB.Business_Logic.Implementation.Register;
 using FoodOrderingDB.Business_Logic.Remove;
 using FoodOrderingDB.Business_Logic.Static_Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB.User_Interface
 {
@@ -41,7 +37,7 @@ namespace FoodOrderingDB.User_Interface
                         break;
                     case 2:
                         Console.Clear();
-                        StaticEmployeeInfo.GetSiteEmployees(_admin.Site);
+                        StaticEmployeeInfo.GetSiteEmployees(_admin.Site.Id);
                         ShowMenu();
                         break;
                     case 3:
@@ -79,8 +75,8 @@ namespace FoodOrderingDB.User_Interface
         }
         private void Login()
         {
-            ILogger<Administrator> logger = new AdminLogin();
-            _admin = logger.Login();
+            ILogin<Administrator> log = new AdminLogin();
+            _admin = log.Login();
         }
     }
 }

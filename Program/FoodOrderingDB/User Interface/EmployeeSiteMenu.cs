@@ -3,23 +3,18 @@ using FoodOrderingDB.Business_Logic.Implementation.Log_in;
 using FoodOrderingDB.Business_Logic.payment;
 using FoodOrderingDB.Business_Logic.Static_Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB.User_Interface
 {
     class EmployeeSiteMenu
     {
-        Employee _employee;
+        private Employee _employee;
         public EmployeeSiteMenu()
         {
             Login();
         }
         public void ShowMenu()
         {
-            int choise;
             Console.WriteLine("1) Show my profile info");
             Console.WriteLine("2) Orders to process");
             Console.WriteLine("3) Process order");
@@ -29,50 +24,51 @@ namespace FoodOrderingDB.User_Interface
 
             var payment = new PaymentRegister(_employee);
 
-            var parsed = int.TryParse(Console.ReadLine(), out choise);
-            if (parsed)
-            {
-                switch (choise)
-                {
-                    case 1:
-                        Console.Clear();
-                        StaticEmployeeInfo.GetCurrentEmployeeInfo(_employee);
-                        ChangePassMenu();
-                        ShowMenu();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        payment.ShowOrdersToProcess();
-                        ShowMenu();
-                        break;
-                    case 3:
-                        Console.Clear();
-                        payment.ProcessOrder();
-                        ShowMenu();
-                        break;
-                    case 4:
-                        Console.Clear();
-                        payment.ShowProcessedOrders();
-                        ShowMenu();
-                        break;
-                    case 5:
-                        Console.Clear();
-                        _employee = null;
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong Input");
-                        Console.ResetColor();
-                        ShowMenu();
-                        break;
-                }
-            }
-            else
+            var info = new PaymentInfo(_employee);
+
+            var parsed = int.TryParse(Console.ReadLine(), out int choise);
+            if (!parsed)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Wrong Input Format");
                 Console.ResetColor();
                 ShowMenu();
+            }
+
+            switch (choise)
+            {
+
+                case 1:
+                    Console.Clear();
+                    StaticEmployeeInfo.GetCurrentEmployeeInfo(_employee.Id);
+                    ChangePassMenu();
+                    ShowMenu();
+                    break;
+                case 2:
+                    Console.Clear();
+                    info.ShowOrdersToProcess();
+                    ShowMenu();
+                    break;
+                case 3:
+                    Console.Clear();
+                    payment.ProcessOrder();
+                    ShowMenu();
+                    break;
+                case 4:
+                    Console.Clear();
+                    info.ShowProcessedOrders();
+                    ShowMenu();
+                    break;
+                case 5:
+                    Console.Clear();
+                    _employee = null;
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Wrong Input");
+                    Console.ResetColor();
+                    ShowMenu();
+                    break;
             }
         }
         private void ChangePassMenu()
@@ -80,14 +76,13 @@ namespace FoodOrderingDB.User_Interface
             Console.WriteLine("\n  1) Change password");
             Console.WriteLine("  2) Turn back");
             Console.Write("  Your choise: ");
-            int choiseProfile;
-            var parsed = int.TryParse(Console.ReadLine(), out choiseProfile);
+            var parsed = int.TryParse(Console.ReadLine(), out int choiseProfile);
             if (parsed)
             {
                 switch (choiseProfile)
                 {
                     case 1:
-                        StaticEmployeeInfo.ChangePassword();
+                        StaticEmployeeInfo.ChangePassword(_employee.Id);
                         break;
                     case 2:
                         Console.Clear();
@@ -99,12 +94,11 @@ namespace FoodOrderingDB.User_Interface
                         break;
                 }
             }
-
         }
         private void Login()
         {
-            ILogger<Employee> logger = new EmployeeLogin();
-            _employee = logger.Login();
+            ILogin<Employee> log = new EmployeeLogin();
+            _employee = log.Login();
         }
     }
 }

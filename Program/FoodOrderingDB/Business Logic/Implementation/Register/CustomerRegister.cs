@@ -1,17 +1,17 @@
 ﻿using FoodOrderingDB.Abstractions;
-using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Interfaces;
+using FoodOrderingDB.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FoodOrderingDB
 {
     class CustomerRegister : IRegistrable<Customer>
     {
-
+        private readonly UnitOfWork _unitOfWork;
+        public CustomerRegister()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
         public Customer Register()
         {
             Customer customer = new Customer();
@@ -45,9 +45,7 @@ namespace FoodOrderingDB
         }
         public void SetInfoToDb(Customer entity)
         {
-            IDataProvider<Customer> provider = new CustomerDataProvider(entity);
-            IDataProcessor<Customer> dataSaver = new DbDataProcessor<Customer>();
-            dataSaver.ProcessData(provider);
+            _unitOfWork.Customers.Add(entity);
         }
     }
 }

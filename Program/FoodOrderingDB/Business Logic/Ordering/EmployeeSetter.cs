@@ -1,16 +1,13 @@
-﻿using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Implementation.Providers;
-using FoodOrderingDB.Data_Access.Interfaces;
+﻿using FoodOrderingDB.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Business_Logic.Implementation.Ordering
 {
     public static class EmployeeSetter
     {
+        private static readonly UnitOfWork _unitOfWork = new UnitOfWork();
         public static int GetId(int customerSiteId)
         {
             var siteWorkers = GetSiteEmployee(customerSiteId);
@@ -24,8 +21,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Ordering
             }
             else
             {
-                var context = new OrderingContext();
-                foreach (var item in context.Employee)
+                foreach (var item in siteWorkers)
                 {
                     return item.Id;
                 }
@@ -44,38 +40,22 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Ordering
                 }
             }
 
-            if (modifiedWorkers.Count > 2)
+            if (modifiedWorkers.Count >= 2)
             {
                 var minimalOrdersCount = siteWorkers.Min(a => a.Order.Count);
-                var employeeIds = GetWantedEmployeesId(minimalOrdersCount, siteWorkers);
+                var employeeIds = GetWantedEmployeesId(minimalOrdersCount, modifiedWorkers);
 
                 return employeeIds[new Random().Next(0, employeeIds.Count)];
             }
-            else if (modifiedWorkers.Count == 2)
+            else if (modifiedWorkers.Count == 1)
             {
-                var context = new OrderingContext();
-                foreach (var item in context.Employee)
-                {
-                    if (item.Id != deletedEmployee.Id)
-                    {
-                        return item.Id;
-                    }
-                }
+                return modifiedWorkers.First().Id;
             }
             return -1;
         }
         private static List<Employee> GetSiteEmployee(int id)
         {
-            var list = new List<Employee>();
-            IDataProvider<Employee> provider = new EmployeeDataProvider(null);
-            foreach (var employees in provider.GetContext())
-            {
-                if (employees.Siteid == id)
-                {
-                    list.Add(employees);
-                }
-            }
-            return list;
+            return _unitOfWork.Employees.GetAll().Where(e => e.Siteid == id).ToList();
         }
         private static List<int> GetWantedEmployeesId(int minOrdersCount, List<Employee> siteWorkers)
         {

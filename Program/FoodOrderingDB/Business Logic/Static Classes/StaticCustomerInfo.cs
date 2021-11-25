@@ -1,5 +1,6 @@
 ﻿using FoodOrderingDB.Data_Access.Implementation;
 using FoodOrderingDB.Data_Access.Interfaces;
+using FoodOrderingDB.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,48 +11,58 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 {
     static class StaticCustomerInfo
     {
-        public static void GetFullInfo(Customer customer)
+        public static readonly UnitOfWork _unitOfWork = new UnitOfWork();
+        public static void GetFullInfo(int id)
         {
-            var provider = new CustomerDataProvider(customer);
-            var findCustomer = provider.GetContext().Where(c => c.Id == customer.Id).FirstOrDefault();
+            var foundCustomer = _unitOfWork.Customers.Get(id);
 
-            Console.WriteLine($"\n  Id: {findCustomer.Id}");
-            Console.WriteLine($"  Name: {findCustomer.FirstName}");
-            Console.WriteLine($"  Surname: {findCustomer.Surname}");
-            Console.WriteLine($"  Middle name: {findCustomer.MiddleName}");
-            Console.WriteLine($"  Email: {findCustomer.Email}");
-            Console.WriteLine($"  Phone number: {findCustomer.PhoneNumber}");
+            Console.WriteLine($"\n  Id: {foundCustomer.Id}");
+            Console.WriteLine($"  Name: {foundCustomer.FirstName}");
+            Console.WriteLine($"  Surname: {foundCustomer.Surname}");
+            Console.WriteLine($"  Middle name: {foundCustomer.MiddleName}");
+            Console.WriteLine($"  Email: {foundCustomer.Email}");
+            Console.WriteLine($"  Phone number: {foundCustomer.PhoneNumber}");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"  Username: {findCustomer.Username}");
-            Console.WriteLine($"  Password: {findCustomer.Password}");
+            Console.WriteLine($"  Username: {foundCustomer.Username}");
+            Console.WriteLine($"  Password: {foundCustomer.Password}");
             Console.ResetColor();
         }
-        public static void ChangePassword()
+        public static void ChangePassword(int id)
         {
+            var foundCustomer = _unitOfWork.Customers.GetAll().FirstOrDefault(c => c.Id == id);
+            if (foundCustomer == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nThe customer with such id was not found");
+                Console.ResetColor();
+                return;
+            }
             Console.Write("\nEnter your previous password: ");
             var oldPass = Console.ReadLine();
 
-            var context = new OrderingContext();
-            var customer = context.Customer.Where(c => c.Password == oldPass).FirstOrDefault();
-            if (customer != null)
-            {
-                Console.Write("\nEnter your new password: ");
-                var newPass = Console.ReadLine();
 
-                customer.Password = newPass;
-
-                context.SaveChanges();
-            }
-            else
+            if (foundCustomer.Password != oldPass)
             {
+                Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nWrong password");
                 Console.ResetColor();
-                ChangePassword();
+                return;
             }
-  
+
+            Console.Write("\nEnter your new password: ");
+            var newPass = Console.ReadLine();
+
+            foundCustomer.Password = newPass;
+            _unitOfWork.Customers.SaveData();
+
             Console.Clear();
-            
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Password Changed!\n");
+            Console.ResetColor();
+
+            return;
         }
     }
 }

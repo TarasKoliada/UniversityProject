@@ -2,12 +2,6 @@
 using FoodOrderingDB.Business_Logic.Implementation;
 using FoodOrderingDB.Business_Logic.Static_Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using FoodOrderingDB.Business_Logic.Implementation.Register;
 
 namespace FoodOrderingDB.User_Interface
@@ -40,7 +34,7 @@ namespace FoodOrderingDB.User_Interface
                         _customer = registrable.Register();
                         break;
                     case 2:
-                        ILogger<Customer> logger = new CustomerLogin();
+                        ILogin<Customer> logger = new CustomerLogin();
                         _customer = logger.Login();
                         break;
                     case 3:
@@ -82,7 +76,7 @@ namespace FoodOrderingDB.User_Interface
                         EnteredSiteMenu();
                         break;
                     case 2:
-                        StaticCustomerInfo.GetFullInfo(_customer);
+                        StaticCustomerInfo.GetFullInfo(_customer.Id);
                         ChangePassMenu();
                         ProfileMenu();
                         break;
@@ -114,24 +108,22 @@ namespace FoodOrderingDB.User_Interface
             Console.Write("  Your choise: ");
             int choiseProfile;
             var parsed = int.TryParse(Console.ReadLine(), out choiseProfile);
-            if (parsed)
+            switch (choiseProfile)
             {
-                switch (choiseProfile)
-                {
-                    case 1:
-                        StaticCustomerInfo.ChangePassword();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong input");
-                        Console.ResetColor();
-                        break;
-                }
+                case 1:
+                    StaticCustomerInfo.ChangePassword(_customer.Id);
+                    break;
+                case 2:
+                    Console.Clear();
+                    break;
+                default:
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("  Wrong input");
+                    Console.ResetColor();
+                    break;
             }
-            
+
         }
         private void ChooseSiteMenu()
         {
@@ -168,9 +160,10 @@ namespace FoodOrderingDB.User_Interface
                     case 3:
                         var rating = new RatingRegister(_customer, _site);
                         rating.Register();
+                        EnteredSiteMenu();
                         break;
                     case 4:
-                        StaticSiteInfo.GetInfo(_site);
+                        StaticSiteInfo.GetInfo(_site.Id);
                         EnteredSiteMenu();
                         break;
                     case 5:

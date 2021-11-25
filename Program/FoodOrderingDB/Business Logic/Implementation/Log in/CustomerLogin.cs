@@ -1,65 +1,58 @@
 ﻿using FoodOrderingDB.Abstractions;
-using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Interfaces;
+using FoodOrderingDB.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB
 {
-    class CustomerLogin : ILogger<Customer>
+    class CustomerLogin : ILogin<Customer>
     {
         Customer _customer;
+        private readonly UnitOfWork _unitOfWork;
+        public CustomerLogin()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
         public Customer Login()
         {
             bool logged = false;
-            var provider = GetProvider();
             int attemptsToLog = 0;
             Console.Write("\nEnter Email or Username: ");
             var loginValue = Console.ReadLine();
 
-            _customer = provider.GetContext().FirstOrDefault(customer => customer.Email == loginValue || customer.Username == loginValue);
+            _customer = _unitOfWork.Customers.GetAll().FirstOrDefault(customer => customer.Email == loginValue || customer.Username == loginValue);
 
-            if (_customer != null)
+            if (_customer == null)
             {
-                do
-                {
-                    Console.Write("Enter your Password: ");
-                    var pass = Console.ReadLine();
-                    if (pass == _customer.Password)
-                    {
-                        logged = true;
-                    }
-                    else
-                    {
-                        ++attemptsToLog;
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nWrong Password\n");
-                        Console.ResetColor();
-                        if (attemptsToLog == 4)
-                        {
-                            Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");
-                            Login();
-                        }
-                    }
-                } while (logged != true);
 
-                return _customer;
-            }
-            else
-            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("The User with such Username and Email is not registered");
                 Console.ResetColor();
                 Login();
                 return null;
             }
-        }
-        private IDataProvider<Customer> GetProvider()
-        {
-            return new CustomerDataProvider(null);
+
+            do
+            {
+                Console.Write("Enter your Password: ");
+                var pass = Console.ReadLine();
+                if (pass != _customer.Password)
+                {
+                    ++attemptsToLog;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nWrong Password\n");
+                    Console.ResetColor();
+                    if (attemptsToLog == 4)
+                    {
+                        Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");
+                        Login();
+                    }
+                }
+
+                logged = true;
+            } while (logged != true);
+
+            return _customer;
         }
     }
 }

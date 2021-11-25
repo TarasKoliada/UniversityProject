@@ -1,16 +1,11 @@
-﻿using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Interfaces;
+﻿using FoodOrderingDB.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Business_Logic.Static_Classes
 {
     public static class StaticSiteInfo
     {
-        private static IDataProvider<Site> provider = new SiteDataProvider();
+        private static readonly UnitOfWork _unitOfWork = new UnitOfWork();
         public static Site ChooseSite()
         {
 
@@ -19,7 +14,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 
             Console.WriteLine("\nChoose site to visit: \n");
 
-            foreach (var sites in provider.GetContext())
+            foreach (var sites in _unitOfWork.Sites.GetAll())
             {
                 Console.Write($"  {++iterator})");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -31,60 +26,32 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             var parsed = int.TryParse(Console.ReadLine(), out siteId);
             Console.Clear();
 
-            if (parsed)
-            {
-                var site = GetSiteById(siteId);
-
-                if (site != null)
-                {
-                    Console.Write($"\nGreat choise! Welcome to ");
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.Write($"{site.Name}");
-                    Console.ResetColor();
-                    return site;
-                }
-                else
-                {
-                    Console.WriteLine("\nThere is no such site in the list, choose other");
-                    ChooseSite();
-                }
-            }
-            else
+            if (!parsed)
             {
                 Console.WriteLine("You can only enter site Id's");
                 ChooseSite();
             }
-            return null;
-        }
+            var site = _unitOfWork.Sites.Get(siteId);
 
-        public static int GetSitesCount()
-        {
-            
-            return provider.GetContext().Count();
-        }
-
-        public static void GetAllSites()
-        {
-            foreach (var item in provider.GetContext())
+            if (site == null)
             {
-                Console.WriteLine($"{item.Id}) {item.Name}");
+                Console.WriteLine("\nThere is no such site in the list, choose other");
+                ChooseSite();
             }
-            
-        }
-        public static Site GetSiteById(int id)
-        {
-            foreach (var site in provider.GetContext())
-            {
-                if (site.Id == id)
-                {
-                    return site;
-                }
-            }
-            return null;
+
+            Console.Write($"\nGreat choise! Welcome to ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{site.Name}");
+            Console.ResetColor();
+            return site;
+
         }
 
-        public static void ShowSiteMenu(Site site)
+
+        public static void ShowSiteMenu(int id)
         {
+            var site = _unitOfWork.Sites.Get(id);
+
             var menuCounter = 0;
             var dishCounter = 0;
             Console.WriteLine();
@@ -105,8 +72,10 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             }
         }
 
-        public static void GetInfo(Site site)
+        public static void GetInfo(int id)
         {
+            var site = _unitOfWork.Sites.Get(id);
+
             Console.WriteLine($"\n  Id: {site.Id}");
             Console.WriteLine($"  Name: {site.Name}");
             Console.WriteLine($"  Description: {site.Description}");
