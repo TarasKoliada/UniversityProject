@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FoodOrderingDB.Business_Logic.Implementation.Ordering;
+using FoodOrderingDB.Business_Logic.Static_Classes;
 using FoodOrderingDB.Repositories;
 
 namespace FoodOrderingDB.Business_Logic.Remove
@@ -20,10 +21,7 @@ namespace FoodOrderingDB.Business_Logic.Remove
             var parsed = int.TryParse(Console.ReadLine(), out int removeId);
             if (!parsed)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong input format. Try more!");
-                Console.ResetColor();
+                WriteMessage.Write("Wrong input format. Try more!", ConsoleColor.Red);
                 Remove();
             }
 
@@ -32,10 +30,7 @@ namespace FoodOrderingDB.Business_Logic.Remove
             var newEmployeeId = EmployeeSetter.GetChangedEmployeeId(deleteEmployee);
             if (newEmployeeId == -1)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("You can not delete this Employee, because he is the last worker");
-                Console.ResetColor();
+                WriteMessage.Write("You can not delete this Employee, because he is the last worker", ConsoleColor.Red);
                 return;
             }
             foreach (var order in _unitOfWork.Orders.GetAll().Where(o => o.EmployeeId == deleteEmployee.Id))
@@ -49,10 +44,7 @@ namespace FoodOrderingDB.Business_Logic.Remove
 
             _unitOfWork.Employees.Delete(deleteEmployee.Id);
 
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\bEmployee removed\n");
-            Console.ResetColor();
+            WriteMessage.Write("\bEmployee removed\n", ConsoleColor.Yellow);
         }
     }
 }

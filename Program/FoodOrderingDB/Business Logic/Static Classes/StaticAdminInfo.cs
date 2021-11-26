@@ -18,13 +18,9 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             Console.WriteLine($" Phone number: {admin.Contact}");
             Console.WriteLine($" Related site - Id: {admin.SiteId} | Name: {admin.Site.Name}");
             Console.WriteLine($" Preferences: {admin.Preferences}");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"   Login: ");
-            Console.ResetColor();
+            WriteMessage.Write($"   Login: ", ConsoleColor.Yellow, false);
             Console.WriteLine($"{admin.Login}");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"   Password: ");
-            Console.ResetColor();
+            WriteMessage.Write($"   Password: ", ConsoleColor.Yellow, false);
             Console.WriteLine($"{admin.Password}\n\n");
         }
     }

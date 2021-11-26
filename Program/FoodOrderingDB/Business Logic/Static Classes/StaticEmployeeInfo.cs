@@ -14,29 +14,22 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             foreach (var employee in _unitOfWork.Employees.GetAll().Where(s => s.Siteid == siteId))
             {
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"ID: {employee.Id} ");
-                Console.ResetColor();
+                WriteMessage.Write($"ID: {employee.Id} ", ConsoleColor.Red, false);
                 Console.WriteLine($"{employee.FirstName} {employee.Surname} {employee.MiddleName} | {employee.Contact} | {employee.Email}");
 
                 if (_unitOfWork.Orders.GetAll().Where(o => o.EmployeeId == employee.Id).ToList().Count > 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("  Orders: ");
-                    Console.ResetColor();
+                    WriteMessage.Write("  Orders: ", ConsoleColor.Green, false);
                     foreach (var order in employee.Order)
                     {
                         Console.WriteLine($"    Order Id: {order.Id} | Status {order.Status} | Created: {order.CreatedDate} | Price: {order.TotalPrice}");
                     }
                 }
-                
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"   Login: ");
-                Console.ResetColor();
+
+                WriteMessage.Write($"   Login: ", ConsoleColor.Yellow, false);
                 Console.WriteLine($"{employee.Login}");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"   Password: ");
-                Console.ResetColor();
+
+                WriteMessage.Write($"   Password: ", ConsoleColor.Yellow, false);
                 Console.WriteLine($"{employee.Password}");
             }
             Console.WriteLine("\n\n");
@@ -47,9 +40,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             var foundEmployee = _unitOfWork.Employees.GetAll().FirstOrDefault(e => e.Id == id);
             if (foundEmployee == null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nThe employee with such id was not found");
-                Console.ResetColor();
+                WriteMessage.Write("\nThe employee with such id was not found", ConsoleColor.Red, false);
                 return;
             }
             Console.Write("\nEnter your previous password: ");
@@ -58,10 +49,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             
             if (foundEmployee.Password != oldPass)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nWrong password");
-                Console.ResetColor();
+                WriteMessage.Write("\nWrong password", ConsoleColor.Red);;
                 return;
             }
 
@@ -71,11 +59,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             foundEmployee.Password = newPass;
             _unitOfWork.Employees.SaveData();
 
-            Console.Clear();
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Password Changed!\n");
-            Console.ResetColor();
+            WriteMessage.Write("Password Changed!\n", ConsoleColor.Yellow);
             return;
 
         }
@@ -96,13 +80,9 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             Console.WriteLine($"  Orders count: {employee.Order.Count}");
             Console.WriteLine($"  Processed orders Count: {paymentsCount}");
             Console.Write($"  Username: ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{employee.Login}");
-            Console.ResetColor();
+            WriteMessage.Write($"{employee.Login}", ConsoleColor.Yellow, false);
             Console.Write($"  Password: ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{employee.Password}\n");
-            Console.ResetColor();
+            WriteMessage.Write($"{employee.Password}\n", ConsoleColor.Yellow, false);
             
         }
     }

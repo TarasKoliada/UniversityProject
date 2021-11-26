@@ -1,11 +1,6 @@
-﻿using FoodOrderingDB.Data_Access.Implementation;
-using FoodOrderingDB.Data_Access.Interfaces;
-using FoodOrderingDB.Repositories;
+﻿using FoodOrderingDB.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodOrderingDB.Business_Logic.Static_Classes
 {
@@ -22,19 +17,14 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             Console.WriteLine($"  Middle name: {foundCustomer.MiddleName}");
             Console.WriteLine($"  Email: {foundCustomer.Email}");
             Console.WriteLine($"  Phone number: {foundCustomer.PhoneNumber}");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"  Username: {foundCustomer.Username}");
-            Console.WriteLine($"  Password: {foundCustomer.Password}");
-            Console.ResetColor();
+            WriteMessage.Write($"  Username: {foundCustomer.Username}\n  Password: {foundCustomer.Password}", ConsoleColor.Yellow, false);
         }
         public static void ChangePassword(int id)
         {
             var foundCustomer = _unitOfWork.Customers.GetAll().FirstOrDefault(c => c.Id == id);
             if (foundCustomer == null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nThe customer with such id was not found");
-                Console.ResetColor();
+                WriteMessage.Write("\nThe customer with such id was not found", ConsoleColor.Red, false);
                 return;
             }
             Console.Write("\nEnter your previous password: ");
@@ -43,10 +33,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
 
             if (foundCustomer.Password != oldPass)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nWrong password");
-                Console.ResetColor();
+                WriteMessage.Write("\nWrong password", ConsoleColor.Red);
                 return;
             }
 
@@ -56,11 +43,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             foundCustomer.Password = newPass;
             _unitOfWork.Customers.SaveData();
 
-            Console.Clear();
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Password Changed!\n");
-            Console.ResetColor();
+            WriteMessage.Write("Password Changed!\n", ConsoleColor.Yellow);
 
             return;
         }

@@ -1,4 +1,5 @@
 ﻿using FoodOrderingDB.Abstractions;
+using FoodOrderingDB.Business_Logic.Static_Classes;
 using FoodOrderingDB.Repositories;
 using System;
 using System.Linq;
@@ -24,10 +25,7 @@ namespace FoodOrderingDB
 
             if (_customer == null)
             {
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("The User with such Username and Email is not registered");
-                Console.ResetColor();
+                WriteMessage.Write("The User with such Username and Email is not registered", ConsoleColor.Red, false);
                 Login();
                 return null;
             }
@@ -39,9 +37,7 @@ namespace FoodOrderingDB
                 if (pass != _customer.Password)
                 {
                     ++attemptsToLog;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nWrong Password\n");
-                    Console.ResetColor();
+                    WriteMessage.Write("\nWrong Password\n", ConsoleColor.Red, false);
                     if (attemptsToLog == 4)
                     {
                         Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");

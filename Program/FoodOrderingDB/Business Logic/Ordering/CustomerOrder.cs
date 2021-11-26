@@ -40,9 +40,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             foreach (var order in _unitOfWork.Orders.GetAll().Where(o => o.CustomerId == _customer.Id))
             {
                 Console.WriteLine("-----------------------------------------");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Id: {order.Id}");
-                Console.ResetColor();
+                WriteMessage.Write($"Id: {order.Id}", ConsoleColor.Red, false);
                 Console.WriteLine($"Status: {order.Status}");
                 Console.WriteLine($"Creation date: {order.CreatedDate}");
                 Console.WriteLine($"Responsible employee identifier: {order.EmployeeId}");
@@ -54,13 +52,9 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                     Console.WriteLine($"   Dish price: {details.Dish.Price}");
                     Console.WriteLine($"   Number of dishes: {details.NumberOfService}");
                 }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Total price: {order.TotalPrice}$");
-                Console.ResetColor();
+                WriteMessage.Write($"Total price: {order.TotalPrice}$", ConsoleColor.Green, false);
                 Console.WriteLine("-----------------------------------------");
             }
-
-
         }
 
         private void SetDetails()
@@ -76,9 +70,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             parsed = int.TryParse(Console.ReadLine(), out int dishId);
             if (!parsed)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nWrong Input format\n");
-                Console.ResetColor();
+                WriteMessage.Write("\nWrong Input format\n", ConsoleColor.Red, false);
                 SetDetails();
             }
 
@@ -88,10 +80,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             }
             catch (Exception)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("There is no such Dish in the menu");
-                Console.ResetColor();
+                WriteMessage.Write("There is no such Dish in the menu", ConsoleColor.Red);
                 SetDetails();
             }
 
@@ -102,10 +91,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                 parsed = int.TryParse(Console.ReadLine(), out int service);
                 if (!parsed)
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nWrong Input format\n");
-                    Console.ResetColor();
+                    WriteMessage.Write("\nWrong Input format\n", ConsoleColor.Red);
                 }
                 else
                 {

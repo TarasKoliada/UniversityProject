@@ -1,4 +1,5 @@
 ﻿using FoodOrderingDB.Abstractions;
+using FoodOrderingDB.Business_Logic.Static_Classes;
 using FoodOrderingDB.Repositories;
 using System;
 using System.Linq;
@@ -22,10 +23,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation
             _administrator = _unitOfWork.Admins.GetAll().FirstOrDefault(a => a.Login == login);
             if (_administrator == null)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("The Administrator with such Login is not registered");
-                Console.ResetColor();
+                WriteMessage.Write("The Administrator with such Login is not registered", ConsoleColor.Red);
                 Login();
                 return null;
             }
@@ -36,32 +34,23 @@ namespace FoodOrderingDB.Business_Logic.Implementation
                 var password = Console.ReadLine();
                 if (_administrator.Password != password)
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Wrong Password");
-                    Console.ResetColor();
+                    WriteMessage.Write("Wrong Password", ConsoleColor.Red);
                     ++attemptsToLog;
                     if (attemptsToLog == 4)
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("You may have entered an foreign Email or Username, try once more: \n");
-                        Console.ResetColor();
+                        WriteMessage.Write("You may have entered an foreign Email or Username, try once more: \n", ConsoleColor.Red);
                         Login();
                     }
                 }
 
                 Console.Clear();
                 Console.Write($"\nSuccess! Welcome ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"{_administrator.Name} {_administrator.MiddleName}!\n");
-                Console.ResetColor();
+                WriteMessage.Write($"{_administrator.Name} {_administrator.MiddleName}!\n", ConsoleColor.Blue, false);
                 logged = true;
 
             } while (logged != true);
 
             return _administrator;
-
         }
     }
 }

@@ -78,6 +78,7 @@
     <Compile Include="Business Logic\Static Classes\StaticSiteInfo.cs" />
     <Compile Include="Business Logic\Implementation\Log in\CustomerLogin.cs" />
     <Compile Include="Business Logic\Implementation\Register\CustomerRegister.cs" />
+    <Compile Include="Business Logic\Static Classes\WriteMessage.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>FoodOrderingModel.tt</DependentUpon>
     </Compile>

@@ -23,9 +23,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             var site = _unitOfWork.Sites.Get(employee.Siteid);
 
             Console.Write($"Adding an Employee to site ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"'{site.Name}'");
-            Console.ResetColor();
+            WriteMessage.Write($"'{site.Name}'", ConsoleColor.Red, false);
             
 
             Console.Write("\nEnter Employee name: ");
@@ -48,28 +46,20 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             if (choise == "Y" || choise == "y")
             {
                 employee.Preferences = true;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("   \nPreferences have been established");
-                Console.ResetColor();
+                WriteMessage.Write("   \nPreferences have been established", ConsoleColor.Yellow, false);
             }
             else
             {
                 employee.Preferences = false;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("   \nPreferences have not been established");
-                Console.ResetColor();
+                WriteMessage.Write("   \nPreferences have not been established", ConsoleColor.Yellow, false);
             }
             
             employee.Login = Login.Generate(employee.FirstName, employee.Surname);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"\nGenerated Login: ");
-            Console.ResetColor();
+            WriteMessage.Write($"\nGenerated Login: ", ConsoleColor.Yellow, false);
             Console.WriteLine($"{employee.Login}");
 
             employee.Password = Password.Generate();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write($"Generated Password: ");
-            Console.ResetColor();
+            WriteMessage.Write($"Generated Password: ", ConsoleColor.Yellow, false);
             Console.WriteLine($"{employee.Password}");
             
             SetInfoToDb(employee);

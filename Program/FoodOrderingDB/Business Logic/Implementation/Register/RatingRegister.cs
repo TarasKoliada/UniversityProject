@@ -34,10 +34,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             var parsed = int.TryParse(Console.ReadLine(), out int dishId);
             if (!parsed)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong input format");
-                Console.ResetColor();
+                WriteMessage.Write("Wrong input format", ConsoleColor.Red);
                 Register();
             }
 
@@ -47,10 +44,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             }
             catch (Exception)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("There is no such Dish in the menu");
-                Console.ResetColor();
+                WriteMessage.Write("There is no such Dish in the menu", ConsoleColor.Red);
                 Register();
             }
 
@@ -62,10 +56,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
 
                 if (!parsed)
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Wrong input format");
-                    Console.ResetColor();
+                    WriteMessage.Write("Wrong input format", ConsoleColor.Red);
                 }
 
                 if (score <= 5 && score > 0)
@@ -75,10 +66,7 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
                 }
                 else
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("You can enter numbers from 1 to 5");
-                    Console.ResetColor();
+                    WriteMessage.Write("You can enter numbers from 1 to 5", ConsoleColor.Red);
                 }
             } while (!parsed || !converted);
 
@@ -93,11 +81,8 @@ namespace FoodOrderingDB.Business_Logic.Implementation.Register
             }
 
             SetInfoToDb(rating);
-            Console.Clear();
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(" \nThank you for rating\n");
-            Console.ResetColor();
+            WriteMessage.Write(" \nThank you for rating\n", ConsoleColor.Green);
 
             return rating;
         }

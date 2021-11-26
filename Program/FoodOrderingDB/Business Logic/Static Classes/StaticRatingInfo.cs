@@ -15,9 +15,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             foreach (var rating in ratings)
             {
                 string remarks = Encoding.UTF8.GetString(rating.Remarks);
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Rating ID: {rating.Id}");
-                Console.ResetColor();
+                WriteMessage.Write($"Rating ID: {rating.Id}", ConsoleColor.Yellow, false);
                 Console.WriteLine($"Customer ID: {rating.CustomerId} | Username: {rating.Customer.Username}");
                 Console.WriteLine($"   Dish ID: {rating.DishId}");
                 Console.WriteLine($"   Menu type: {rating.Dish.MenuType.Name}");

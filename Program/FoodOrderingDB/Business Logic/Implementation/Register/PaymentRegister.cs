@@ -1,4 +1,5 @@
-﻿using FoodOrderingDB.Repositories;
+﻿using FoodOrderingDB.Business_Logic.Static_Classes;
+using FoodOrderingDB.Repositories;
 using System;
 using System.Linq;
 
@@ -23,10 +24,7 @@ namespace FoodOrderingDB.Business_Logic.payment
             var parsed = int.TryParse(Console.ReadLine(), out int orderId);
             if (!parsed)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong input format\n");
-                Console.ResetColor();
+                WriteMessage.Write("Wrong input format\n", ConsoleColor.Red);
                 ProcessOrder();
             }
 
@@ -34,10 +32,7 @@ namespace FoodOrderingDB.Business_Logic.payment
 
             if (foundOrder == null)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("There is no such order in your list\n");
-                Console.ResetColor();
+                WriteMessage.Write("There is no such order in your list\n", ConsoleColor.Red);
                 ProcessOrder();
             }
 
@@ -52,18 +47,12 @@ namespace FoodOrderingDB.Business_Logic.payment
 
                 SetInfoToDb(payment);
 
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Payment processed successfully\n");
-                Console.ResetColor();
+                WriteMessage.Write("Payment processed successfully\n", ConsoleColor.Green);
                 return;
             }
             else if (foundOrder.Status == true)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("This order has already been processed\n");
-                Console.ResetColor();
+                WriteMessage.Write("This order has already been processed\n", ConsoleColor.Red);
                 return;
             }
         }

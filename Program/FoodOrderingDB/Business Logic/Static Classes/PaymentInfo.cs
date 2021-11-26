@@ -14,17 +14,12 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
         }
         public void ShowOrdersToProcess()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Orders to process: ");
-            Console.ResetColor();
+            WriteMessage.Write("Orders to process: ", ConsoleColor.Green, false);
             foreach (var order in _unitOfWork.Orders.GetAll())
             {
                 if (order.Status == false && order.EmployeeId == _employee.Id)
                 {
-
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"Order Id: {order.Id}");
-                    Console.ResetColor();
+                    WriteMessage.Write($"Order Id: {order.Id}", ConsoleColor.Yellow, false);
                     Console.WriteLine($"  Customer Id: {order.CustomerId}");
                     Console.WriteLine($"  Created: {order.CreatedDate}");
                     foreach (var details in order.OrderDetails)
@@ -37,9 +32,7 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
                         Console.WriteLine($"     Total dish price: {details.TotalDishPrice}$");
                     }
                     Console.Write($"  Order Price: ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"{order.TotalPrice}$\n");
-                    Console.ResetColor();
+                    WriteMessage.Write($"{order.TotalPrice}$\n", ConsoleColor.Yellow, false);
                 }
             }
         }
@@ -52,15 +45,11 @@ namespace FoodOrderingDB.Business_Logic.Static_Classes
             {
                 if (payment.EmployeeId == _employee.Id)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"\n Payment Id: {payment.Id}");
-                    Console.ResetColor();
+                    WriteMessage.Write($"\n Payment Id: {payment.Id}", ConsoleColor.Yellow, false);
                     Console.WriteLine($"   Created: {payment.CreatedDate}");
                     Console.WriteLine($"   Order Id: {payment.Order.Id}");
                     Console.WriteLine($"   Paid By | Adress - {payment.PaidBy}");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"   Price: {payment.Price}$");
-                    Console.ResetColor();
+                    WriteMessage.Write($"   Price: {payment.Price}$", ConsoleColor.Green, false);
                 }
             }
         }

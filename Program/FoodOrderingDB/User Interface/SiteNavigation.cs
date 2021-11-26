@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodOrderingDB.Business_Logic.Static_Classes;
+using System;
 using System.Diagnostics;
 
 namespace FoodOrderingDB.User_Interface
@@ -39,10 +40,7 @@ namespace FoodOrderingDB.User_Interface
                     CloseProgram();
                     break;
                 default:
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("  Select options 1 to 4\n");
-                    Console.ResetColor();
+                    WriteMessage.Write("  Select options 1 to 4\n", ConsoleColor.Red);
                     ShowMenu();
                     break;
             }

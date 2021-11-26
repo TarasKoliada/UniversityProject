@@ -29,9 +29,7 @@ namespace FoodOrderingDB.User_Interface
             var parsed = int.TryParse(Console.ReadLine(), out int choise);
             if (!parsed)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Wrong Input Format");
-                Console.ResetColor();
+                WriteMessage.Write("Wrong Input Format", ConsoleColor.Red);
                 ShowMenu();
             }
 
@@ -64,9 +62,7 @@ namespace FoodOrderingDB.User_Interface
                     _employee = null;
                     break;
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Wrong Input");
-                    Console.ResetColor();
+                    WriteMessage.Write("Wrong Input", ConsoleColor.Red);
                     ShowMenu();
                     break;
             }
@@ -88,9 +84,7 @@ namespace FoodOrderingDB.User_Interface
                         Console.Clear();
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Wrong input");
-                        Console.ResetColor();
+                        WriteMessage.Write("Wrong Input", ConsoleColor.Red, false);
                         break;
                 }
             }
